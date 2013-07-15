@@ -13,10 +13,10 @@ import org.junit.Test;
  */
 public class LogisticRegressionTest {
     @Test
-    public void logisticRegressionAnyNumberOfFeatures() {
+    public void logisticRegressionTest() {
+        // given
         int numberOfFeatures = 4;
         double[] theta;
-
         int mapfeaturesValues[][] = new int[5][numberOfFeatures];
         mapfeaturesValues[0] = new int[]{1,100,80,10};
         mapfeaturesValues[1] = new int[]{1,60,70,20};
@@ -26,20 +26,20 @@ public class LogisticRegressionTest {
 
         double featuresExpectedValues[] = new double[]{1.0,0.0,0.0,0.0,1.0};
 
-    //    LogisticEngine p = new LogisticEngine();
-
+        // when
         theta = LogisticRegresion.logisticTrain( mapfeaturesValues, featuresExpectedValues);
 
+        // then
         for(int k = 0;k<mapfeaturesValues.length;k++) {
             Assert.assertEquals(featuresExpectedValues[k], LogisticRegresion.logisticFunction(LogisticRegresion.scalarProduct(theta, mapfeaturesValues[k])), 0.1);
         }
     }
 
     @Test
-    public void nonLinearFeaturesTest() {
+    public void moreComplexLogisticRegressionTest() {
+        // given
         int numberOfFeatures = 3;
         double[] theta;
-
         int valueOfFeatureParameters[][] = new int[7][numberOfFeatures];
         valueOfFeatureParameters[0] = new int[]{1,100,80};
         valueOfFeatureParameters[1] = new int[]{1,60,70};
@@ -49,9 +49,10 @@ public class LogisticRegressionTest {
         valueOfFeatureParameters[5] = new int[]{1,5,90};
         valueOfFeatureParameters[6] = new int[]{1,0,130};
 
-
+        // and
         int extendedFeatures[][] = new int[7][10];
 
+        // wrap to quadratic and cubic parameters to learn also non linearly separable classifiers
         for (int i=0;i<valueOfFeatureParameters.length;i++) {
             extendedFeatures[i][0] = valueOfFeatureParameters[i][0]; // =1
             extendedFeatures[i][1] = valueOfFeatureParameters[i][1];
@@ -65,20 +66,14 @@ public class LogisticRegressionTest {
             extendedFeatures[i][8] = valueOfFeatureParameters[i][1]^3*valueOfFeatureParameters[i][2]^2;
             extendedFeatures[i][9] = valueOfFeatureParameters[i][2]^3*valueOfFeatureParameters[i][1]^2;
         }
-
-
-
         double featuresExpectedValues[] = new double[]{1.0,0.0,1.0,0.0,1.0,0.0,0.0};
 
-
+        // when
         theta = LogisticRegresion.logisticTrain( extendedFeatures, featuresExpectedValues);
 
-
-
+        // then
         for(int k = 0;k<extendedFeatures.length;k++) {
             Assert.assertEquals(featuresExpectedValues[k], LogisticRegresion.logisticFunction(LogisticRegresion.scalarProduct(theta,extendedFeatures[k])), 0.1);
         }
-
     }
-
 }
