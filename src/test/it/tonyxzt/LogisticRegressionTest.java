@@ -17,21 +17,21 @@ public class LogisticRegressionTest {
         // given
         int numberOfFeatures = 4;
         double[] theta;
-        int mapfeaturesValues[][] = new int[5][numberOfFeatures];
-        mapfeaturesValues[0] = new int[]{1,100,80,10};
-        mapfeaturesValues[1] = new int[]{1,60,70,20};
-        mapfeaturesValues[2] = new int[]{1,30,40,30};
-        mapfeaturesValues[3] = new int[]{1,15,20,50};
-        mapfeaturesValues[4] = new int[]{1,5,8,60};
+        int parameters[][] = new int[5][numberOfFeatures];
+        parameters[0] = new int[]{1,100,80,10};
+        parameters[1] = new int[]{1,60,70,20};
+        parameters[2] = new int[]{1,30,40,30};
+        parameters[3] = new int[]{1,15,20,50};
+        parameters[4] = new int[]{1,5,8,60};
 
         double featuresExpectedValues[] = new double[]{1.0,0.0,0.0,0.0,1.0};
 
         // when
-        theta = LogisticRegresion.logisticTrain( mapfeaturesValues, featuresExpectedValues);
+        theta = LogisticRegresion.logisticTrain( parameters, featuresExpectedValues);
 
         // then
-        for(int k = 0;k<mapfeaturesValues.length;k++) {
-            Assert.assertEquals(featuresExpectedValues[k], LogisticRegresion.logisticFunction(LogisticRegresion.scalarProduct(theta, mapfeaturesValues[k])), 0.1);
+        for(int k = 0;k<parameters.length;k++) {
+            Assert.assertEquals(featuresExpectedValues[k], LogisticRegresion.logisticFunction(LogisticRegresion.scalarProduct(theta, parameters[k])), 0.1);
         }
     }
 
